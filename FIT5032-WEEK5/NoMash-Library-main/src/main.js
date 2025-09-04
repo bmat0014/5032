@@ -11,7 +11,14 @@ import Aura from '@primevue/themes/aura'
 // import Column from 'primevue/Column'
 
 const app = createApp(App)
-app.use(PrimeVue, { theme: { preset: Aura } })
+app.use(PrimeVue, {
+    theme: {
+        preset: Aura,
+        options: {
+            darkModeSelector: 'none'
+        }
+    }
+})
 
 // app.component('DataTable', DataTable)
 // app.component('Column', Column)
