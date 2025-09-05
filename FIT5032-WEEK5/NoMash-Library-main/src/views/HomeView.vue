@@ -18,7 +18,8 @@ const submittedCards = ref([])
 const submitForm = () => {
   validateName(true)
   validatePassword(true)
-  if (!errors.value.username && !errors.value.password) {
+  validateConfirmPassword(true)
+  if (!errors.value.username && !errors.value.password && !errors.value.confirmPassword) {
     submittedCards.value.push({ ...formData.value })
     clearForm()
   }
@@ -154,9 +155,10 @@ const validatePassword = (blur) => {
                 id="confirm-password"
                 v-model="formData.confirmPassword"
                 @blur="() => validateConfirmPassword(true)"
+                @input="() => validateConfirmPassword(false)"
               />
               <div v-if="errors.confirmPassword" class="text-danger">
-                {{ errors.confirmPasswordassword }}
+                {{ errors.confirmPassword }}
               </div>
             </div>
           </div>
@@ -234,8 +236,6 @@ const validatePassword = (blur) => {
 </template>
 
 <style scoped>
-
-
 /* Class selectors */
 .form {
   text-align: center;
