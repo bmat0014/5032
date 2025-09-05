@@ -16,7 +16,7 @@ const logout = () => {
   <div class="container">
     <header class="d-flex justify-content-center py-3">
       <ul class="nav nav-pills">
-        <li class="nav-item">
+        <li v-if="!isAuthenticated" class="nav-item">
           <router-link to="/" class="nav-link" active-class="active" aria-current="page"
             >Login</router-link
           >
