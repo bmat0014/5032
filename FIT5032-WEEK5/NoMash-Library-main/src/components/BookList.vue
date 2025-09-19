@@ -13,7 +13,17 @@
 <script>
 import { ref, onMounted } from 'vue'
 import db from '../Firebase/init.js'
-import { collection, query, where, getDocs, updateDoc, doc, deleteDoc } from 'firebase/firestore'
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  updateDoc,
+  doc,
+  deleteDoc,
+  orderBy,
+  limit
+} from 'firebase/firestore'
 
 export default {
   setup() {
@@ -21,7 +31,12 @@ export default {
 
     const fetchBooks = async () => {
       try {
-        const q = query(collection(db, 'books'), where('isbn', '>', 1000))
+        const q = query(
+          collection(db, 'books'),
+          where('isbn', '>', 1000),
+          orderBy('isbn', 'desc'),
+          limit(3)
+        )
         const querySnapshot = await getDocs(q)
         const booksArray = []
         querySnapshot.forEach((doc) => {
