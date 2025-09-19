@@ -29,6 +29,7 @@ export default {
   setup() {
     const books = ref([])
 
+    // Fetch books from Firestore
     const fetchBooks = async () => {
       try {
         const q = query(
@@ -47,9 +48,8 @@ export default {
         console.error('Error fetching books: ', error)
       }
     }
-
+    // Update book details
     const updateBook = async (bookId) => {
-      // Simple prompt for now - you could make this more sophisticated
       const newName = prompt('Enter new book name:')
       const newIsbn = prompt('Enter new ISBN:')
 
@@ -65,7 +65,8 @@ export default {
         }
       }
     }
-
+    
+    // Delete a book
     const deleteBook = async (bookId) => {
       try {
         await deleteDoc(doc(db, 'books', bookId))
