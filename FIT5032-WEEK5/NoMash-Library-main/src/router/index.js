@@ -3,9 +3,27 @@ import HomeView from '../views/HomeView.vue'
 import AboutView from '../views/AboutView.vue'
 import LoginView from '@/views/LoginView.vue'
 import AccessDenied from '@/views/AccessDenied.vue'
-import { isAuthenticated } from '@/auth.js'
+import FirebaseSignInView from '@/views/FirebaseSignInView.vue'
+import FirebaseSignUpView from '@/views/FirebaseSignUpView.vue'
+import { getAuth } from 'firebase/auth'
+import AddBookView from '@/views/AddBookView.vue'
 
 const routes = [
+  {
+    path: '/addbook',
+    name: 'AddBook',
+    component: AddBookView
+  },
+  {
+    path: '/FireSignIn',
+    name: 'FireSignIn',
+    component: FirebaseSignInView
+  },
+  {
+    path: '/FireSignUp',
+    name: 'FireSignUp',
+    component: FirebaseSignUpView
+  },
   {
     path: '/',
     name: 'Login',
@@ -35,8 +53,13 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.meta.requiresAuth && !isAuthenticated.value) {
-    next({ name: 'AccessDenied' })
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (getAuth().currentUser) {
+      next()
+    } else {
+      alert('You must be logged in to access this page.')
+      next('/')
+    }
   } else {
     next()
   }
